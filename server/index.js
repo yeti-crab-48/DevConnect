@@ -23,6 +23,10 @@ app.use((req, res) => {
   res.end('not a valid path');
 });
 
+app.use((err, req, res, next) => {
+  console.log(err.message);
+})
+
 //server will listen to value of PORT
 app.listen(PORT, () => {
   console.log('server listening to port ' + PORT);

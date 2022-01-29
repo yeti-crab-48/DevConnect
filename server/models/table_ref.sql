@@ -16,6 +16,7 @@ CREATE TABLE Users (
     id uuid DEFAULT uuid_generate_v4 (),
     password TEXT,
     PRIMARY KEY (id),
+    UNIQUE(username)
 )
 
 INSERT INTO Users(username, password)

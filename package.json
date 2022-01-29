@@ -45,6 +45,7 @@
     "cookie-parser": "^1.4.6",
     "dotenv": "^14.3.2",
     "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
     "react": "^17.0.2",
     "react-router-dom": "^6.2.1",
