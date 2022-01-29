@@ -5,7 +5,7 @@ export const addPostActionCreator = (postID) => ({
   type: types.ADD_POST
   
 })
-export const getPostActionCreator = (postID) =>({
-  type: types.GET_POST
+export const getPostsActionCreator = () =>({
+  type: types.GET_POSTS
   
 })
