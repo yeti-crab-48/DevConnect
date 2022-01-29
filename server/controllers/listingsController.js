@@ -1,5 +1,8 @@
 //Controller middleware for path: /api/listings
 
+//requiring our db
+const db = require('../models/yetiCrabdb.js');
+
 module.exports = {
   //will send the data of all current listings from db to frontend to populate the board when client logs in after component mounts
   populate(req, res, next) {

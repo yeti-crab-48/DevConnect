@@ -1,5 +1,8 @@
 //Controller middleware for path: /api/user
 
+//requiring our db
+const db = require('../models/yetiCrabdb.js');
+
 module.exports = {
   //middleware for /api/user/login, it will find the record in the db user Table and go to the next middle if it is found, if not then redirect to signup
   login(req, res, next) {
