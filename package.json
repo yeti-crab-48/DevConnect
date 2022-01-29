@@ -7,7 +7,6 @@
     "server": "cd server && nodemon index.js",
     "start": "webpack serve --mode development --open",
     "dev": "concurrently \"npm run start\" \"npm run server\"",
-    "test": "npm run start && npm run server",
     "build": "webpack --mode production"
   },
   "repository": {
