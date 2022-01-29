@@ -1,2 +1,4 @@
-# yeti-crab-scratch-project
-Eric, Nick, Miko, Willia, Kerolos
+# 
+
+yeti-crab-scratch-project
+
