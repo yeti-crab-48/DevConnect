@@ -14,14 +14,13 @@ CREATE TABLE table_name(
 CREATE TABLE Users (
     username TEXT,
     id uuid DEFAULT uuid_generate_v4 (),
-    password SERIAL,
+    password TEXT,
     PRIMARY KEY (id),
 )
 
 INSERT INTO Users(username, password)
 VALUES('TEST', 1234)
 
-I
 INSERT INTO Users(username, password)
 VALUES('Tessa', 1234)
 
@@ -58,8 +57,8 @@ CREATE TABLE JoinTable (
 
 INSERT INTO JoinTable(user_id, post_id)
 VALUES
-('eb158658-2bb5-4717-b78b-db87ebc08db2', '5c4561d8-056e-4908-82f0-604bacafd449'),
-('eb158658-2bb5-4717-b78b-db87ebc08db2', 'e6c4b001-3d69-4b2d-bf9e-5d147152155f')
+('eb158658-2bb5-4717-b78b-db87ebc08db2', '5c4561d8-056e-4908-82f0-604bacafd449'), /*user_id, post_id*/
+('eb158658-2bb5-4717-b78b-db87ebc08db2', 'e6c4b001-3d69-4b2d-bf9e-5d147152155f')  /*user_id, post_id*/
 
 SELECT Users.username AS applicant, Post.title, Post.body, Post.created_at 
 FROM JoinTable 
@@ -70,3 +69,17 @@ JOIN Post ON Post.id = JoinTable.post_id
 /* ALTER TABLE "table_name" RENAME COLUMN "column 1" TO "column 2"; */
 
 ALTER TABLE post RENAME COLUMN createdat TO created_at
+
+/* ALTER TABLE mytable ALTER COLUMN mycolumn newtype */
+
+ALTER TABLE Users 
+ALTER COLUMN password TYPE TEXT
+
+/*
+ALTER TABLE table_name
+ALTER COLUMN column_name1 [SET DATA] TYPE new_data_type,
+
+ALTER TABLE assets 
+    ALTER COLUMN location TYPE VARCHAR,
+    ALTER COLUMN description TYPE VARCHAR;
+*/

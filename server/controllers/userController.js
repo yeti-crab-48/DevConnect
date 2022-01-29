@@ -9,13 +9,8 @@ const bcrypt = require('bcrypt');
 const workFactor = 10;
 
 //function to encrypt account password to improve security when signing up
-async function encrypt(password) {
-  try {
-    const hashPassword = await bcrypt.hash(password, workFactor);
-    return hashPassword;
-  } catch (err) {
-     return new Error(err)
-  }
+function encrypt(password) {
+  return bcrypt.hash(password, workFactor)
 }
 
 
@@ -30,12 +25,16 @@ module.exports = {
   signUp(req, res, next) {
     const queryEntry = `
       INSERT INTO Users(username, password)
-      VALUES($1, $2)`
-    db.query(queryEntry, [req.body.username, encrypt(req.body.password)], (err, result) => {
-      if(err) {
-        next(err)
-      }
-      return next();
-    });
+      VALUES($1, $2)`;
+      encrypt(req.body.password).then(hash => {
+        console.log(typeof hash);
+        db.query(queryEntry, [req.body.username, hash], (err, result) => {
+          if(err) {
+            console.log('errr: ', err.message);
+            next(err)
+          }
+          return next();
+        });
+      });
   }
 }
