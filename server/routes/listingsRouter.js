@@ -4,9 +4,10 @@ const router = express.Router();
 
 //Controller
 const listingsController = require('../controllers/listingsController.js');
+const userController = require('../controllers/userController.js');
 
 //get request made when client is in the homepage, end result is sending a JSON of all the listings
-router.get('/', listingsController.populate, (req, res) => {
+router.get('/', userController.auth, listingsController.populate, (req, res) => {
   res.end('/api/listings');
 });
 

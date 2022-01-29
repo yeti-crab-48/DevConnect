@@ -28,8 +28,27 @@ function generateRefreshToken(id) {
 module.exports = {
   //middleware for /api/user/login, it will find the record in the db user Table and go to the next middle if it is found, if not then redirect to signup
   login(req, res, next) {
-    req.body
-    next();
+    const {username, password} = req.body;
+    const queryEntry = `
+      SELECT * FROM Users
+      WHERE username = $1
+    `
+    db.query(queryEntry, [username], (err, result) => {
+      if(err) {
+        next(err);
+      }
+      const { password: hashedPassword, id } = result.rows[0];
+      bcrypt.compare(password, hashedPassword, (err, bcryptRes) => {
+        if(bcryptRes){
+          console.log('passes bycrypt: ', password);
+          res.locals.user_id = id;
+          next();
+        } else {
+          console.log('hitting else');
+          next({code: 1});
+        }
+      })
+    });
   },
   //middleware for /api/user/signup, it will create a new record in user Table if username is unique and redirect to homepage
   signUp(req, res, next) {
@@ -53,5 +72,16 @@ module.exports = {
     res.locals.token = generateToken(res.locals.user_id);
     res.locals.refreshToken = generateRefreshToken(res.locals.user_id);
     next();
+  },
+
+  auth(req, res, next) {
+    console.log(req.cookies);
+    jwt.verify(req.cookies.jwtToken, process.env.JWT_SECRET, (err, decoded) => {
+      if(decoded) {
+        return next();
+      } else {
+        return next({code: 1});
+      }
+    })
   }
 }
