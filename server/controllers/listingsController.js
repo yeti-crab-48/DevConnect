@@ -32,9 +32,6 @@ module.exports = {
   },
   //will delete the record in db listings table
   delete(req, res, next) {
-    // const queryEntry =
-    // `SELECT * FROM Post
-    // WHERE id = $1`;
     const queryEntry =
     `DELETE FROM Post 
     WHERE id = $1

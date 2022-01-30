@@ -13,8 +13,8 @@ module.exports = {
     VALUES ($1, $2, $3, $4, $5, $6, $7)
     RETURNING *`;
     const {id: user_id} = jwt.decode(req.cookies.jwtToken, process.env.JWT_SECRET);
-    const {title, body, created_at, contact, skills} = req.body;
-    db.query(queryEntry, [0, title, body, created_at, contact, skills, user_id], (err, result) => {
+    const {title, body, contact, skills} = req.body;
+    db.query(queryEntry, [0, title, body, new Date().toLocaleString(), contact, skills, user_id], (err, result) => {
       if(err) {
         return next({code: 2});
       }

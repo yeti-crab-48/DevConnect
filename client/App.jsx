@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import Home from './containers/Home';
 import Login from './containers/Login';
+import PostForm from './containers/PostForm';
 
 
 
@@ -16,6 +17,7 @@ const App = (props) => {
       <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path='/register' element={<Login/>}></Route>
+        <Route path='/form' element={<PostForm/>}></Route>
       </Routes>
       {/* <h1 style={{color: 'blue', textAlign: 'center'}}>Let's Go Team Yeti Crab!!</h1>
       <img style={{display:'block', margin: '0 auto'}} src='https://orig00.deviantart.net/9676/f/2009/247/6/1/yeti_crab_by_chaoskomori.jpg'/> */}

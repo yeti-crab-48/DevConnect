@@ -20,7 +20,8 @@ router.use('/listings', listingsRouter);
 
 //post request when client submits a 'post' form 
 router.post('/createpost', userController.auth, apiController.createPost, (req, res) => {
-  res.json(res.locals.post);
+  // res.json(res.locals.post);
+  res.json({postSuccess: true});
 });
 
 module.exports = router;

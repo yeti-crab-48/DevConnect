@@ -29,8 +29,9 @@ const Home = (props) => {
 
   return (
     <div>
-      Hello this is home 
-      <Link to='/register'>Click here to register</Link>
+      Hello this is home <br/>
+      <Link to='/register'>Click here to register</Link><br/>
+      <Link to='/form'>Click here to create a post</Link>
       <PostCardWrapper>
         {props.postList.map((post, i) => { return <PostCard title={post.title} createdAt={post.createdAt} key={i}/>})}
       </PostCardWrapper>
