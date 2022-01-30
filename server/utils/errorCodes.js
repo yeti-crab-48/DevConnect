@@ -3,8 +3,13 @@ module.exports = errorHandler = (err) => {
   console.log(err);
   switch(err.code) {
     case 1: 
-      return error.message = 'Not authenticated'
+      error.message = 'Not authenticated';
+      return error;
+    case 2: 
+      error.message = 'Database retrieval failure';
+      return error;
     default: 
-      return error.message = err.message
+      error.message = err.message;
+      return error;
   }
 }

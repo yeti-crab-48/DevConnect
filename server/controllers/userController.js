@@ -75,7 +75,6 @@ module.exports = {
   },
 
   auth(req, res, next) {
-    console.log(req.cookies);
     jwt.verify(req.cookies.jwtToken, process.env.JWT_SECRET, (err, decoded) => {
       if(decoded) {
         return next();

@@ -3,7 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 //Controllers
-const apiController = require('../controllers/apiController.js')
+const apiController = require('../controllers/apiController.js');
+const userController = require('../controllers/userController.js');
+
 
 //Routers
 const userRouter = require('./userRouter.js');
@@ -17,8 +19,8 @@ router.use('/listings', listingsRouter);
 
 
 //post request when client submits a 'post' form 
-router.post('/createpost', apiController.createPost, (req, res) => {
-  res.end('/api/createpost');
+router.post('/createpost', userController.auth, apiController.createPost, (req, res) => {
+  res.json(res.locals.post);
 });
 
 module.exports = router;

@@ -8,16 +8,16 @@ const userController = require('../controllers/userController.js');
 
 //get request made when client is in the homepage, end result is sending a JSON of all the listings
 router.get('/', userController.auth, listingsController.populate, (req, res) => {
-  res.end('/api/listings');
+  res.json(res.locals.posts);
 });
 
 //get request made when one of the listings is clicked, end result is sending a specific JSON of the clicked listing
-router.get('/:id', listingsController.popUp, (req, res) => {
-  res.end('/api/listings/' + req.params.id);
+router.get('/:id', userController.auth, listingsController.popUp, (req, res) => {
+  res.json(res.locals.post);
 });
-
-router.delete('/:id', listingsController.delete, (req, res) => {
-  res.end('/api/listings');
+//delete request made when delete button is clicked, end result is file being deleted from database
+router.delete('/:id', userController.auth, listingsController.delete, (req, res) => {
+  res.json(res.locals.deletedPost);
 });
 
 module.exports = router;
