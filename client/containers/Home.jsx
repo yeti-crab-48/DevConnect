@@ -7,12 +7,12 @@ import styled from "styled-components";
 
 
 const mapStateToProps = (state) =>({
-//Provide pertenant state here
   postList: state.posts.postList
 });
 
 const mapDispatchToProps = (dispatch) =>({
-//provide dispatch here
+
+  // calls the thunk middleware function to 
   getPosts: () => {
     const thunkFunc = fetchPosts();
     dispatch(thunkFunc);
@@ -27,7 +27,6 @@ const Home = (props) => {
   }, [])
 
   return (
-
     <div>
       Hello this is home 
       <PostCardWrapper>

@@ -6,13 +6,18 @@ const router = express.Router();
 const userController = require('../controllers/userController.js');
 
 //request made when client logins into an account
-router.post('/login', userController.login, (req, res) => {
-  res.end('/api/user/login');
+router.post('/login', userController.login, userController.genSession, (req, res) => {
+  res.cookie('jwtToken', res.locals.token, { httpOnly: true });
+  res.cookie('jwtRefreshToken', res.locals.refreshToken, { httpOnly: true });
+  res.redirect('/')
+  
 });
 
 //request made when client signs up for an account
-router.post('/signup', userController.signUp, (req, res) => {
-  res.end('/api/user/signup');
+router.post('/signup', userController.signUp, userController.genSession, (req, res) => {
+  res.cookie('jwtToken', res.locals.token, { httpOnly: true });
+  res.cookie('jwtRefreshToken', res.locals.refreshToken, { httpOnly: true });
+  res.redirect('/');
 });
 
 module.exports = router;
