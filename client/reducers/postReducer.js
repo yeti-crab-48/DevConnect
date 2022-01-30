@@ -85,22 +85,29 @@ const data = [
  */
 export const fetchPosts = () => {
   return (dispatch, getState) => {
-    dispatch({type: types.GET_POSTS, payload: data})
+    fetch('api/listings', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    })
+      .then((data) => data.json())
+      .then((posts) =>  // assume its an array of objects 
+        dispatch({type: types.GET_POSTS, payload: posts})  
+      )
   }
 }
   
       // .then(posts => {
       //   dispatch({type: types.GET_POSTS, payload: posts})
-      // });
-    // fetch('./api/listings', {
-    //   method: 'GET',
-    //   headers: {'Content-Type': 'application/json'},
-    // })
-    //   .then((data) => data.json())
-    //   .then((posts) =>  // assume its an array of objects 
-    //     dispatch({type: types.GET_POSTS, payload: posts})  
-    //   )
-//   }
+  //     // });
+  //   fetch('./api/listings', {
+  //     method: 'GET',
+  //     headers: {'Content-Type': 'application/json'},
+  //   })
+  //     .then((data) => data.json())
+  //     .then((posts) =>  // assume its an array of objects 
+  //       dispatch({type: types.GET_POSTS, payload: posts})  
+  //     )
+  // }
 // }
 
 

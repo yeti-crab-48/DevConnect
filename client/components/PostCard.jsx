@@ -3,10 +3,12 @@ import styled from "styled-components";
 
 
 
+/**
+ * 
+ * PostCard Component
+ */
 const PostCard = ({key, id, title, createdAt}) => {
-
   return (
-    console.log(title, createdAt), 
     <StyledPostCard key={key}>
         <StyledTitle> {title} </StyledTitle>
         {createdAt}
