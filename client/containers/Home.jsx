@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchPosts } from "../reducers/postReducer";
+import { connect } from "react-redux";
+import PostCard from "../components/PostCard";
 
 
 const mapStateToProps = (state) =>({
@@ -9,7 +11,10 @@ const mapStateToProps = (state) =>({
 
 const mapDispatchToProps = (dispatch) =>({
 //provide dispatch here
-  // getPosts: () => {dispatch(actions.getPostsActionCreator())},
+  getPosts: () => {
+    const thunkFunc = fetchPosts();
+    dispatch(thunkFunc);
+  },
   addPost: (postID) => {dispatch(actions.addPostActionCreator(postID))},
 });
 
@@ -17,18 +22,17 @@ const mapDispatchToProps = (dispatch) =>({
 const Home = (props) => {
 
   useEffect(() => {
-    const thunkFunc = fetchPosts();
-    dispatch(thunkFunc);
+    props.getPosts();
   }, [])
 
-
   return (
+      
     <div>
       Hello this is home 
-      {state.postList.map((item, i) => { <div key={i}>{item}</div>})}
+      {props.postList.map((post, i) => { return  <PostCard title={post.title} createdAt={post.createdAt} key={i}/>})}
     </div>
   )
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
