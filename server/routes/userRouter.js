@@ -9,9 +9,10 @@ const userController = require('../controllers/userController.js');
 
 //post request made when client logins into an account | path : /api/user/login
 router.post('/login', userController.login, userController.genSession, (req, res) => {
+  //our generated tokens being saved as a cookie
   res.cookie('jwtToken', res.locals.token, { httpOnly: true });
   res.cookie('jwtRefreshToken', res.locals.refreshToken, { httpOnly: true });
-  res.json({success: true});
+  return res.json({success: true});
   
 });
 
@@ -19,7 +20,7 @@ router.post('/login', userController.login, userController.genSession, (req, res
 router.post('/signup', userController.signUp, userController.genSession, (req, res) => {
   res.cookie('jwtToken', res.locals.token, { httpOnly: true });
   res.cookie('jwtRefreshToken', res.locals.refreshToken, { httpOnly: true });
-  res.json({success: true});
+  return res.json({success: true});
 });
 
 module.exports = router;

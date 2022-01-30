@@ -41,7 +41,6 @@ module.exports = {
 
   //middleware for /api/user/login, it will find the record in the User Table and go to the next middleware if successful
   login(req, res, next) {
-    console.log('incoming req.body', req.body);
     const {username, password} = req.body;
     const queryEntry = `
       SELECT * FROM Users
@@ -54,11 +53,9 @@ module.exports = {
       const { password: hashedPassword, id } = result.rows[0];
       bcrypt.compare(password, hashedPassword, (err, bcryptRes) => {
         if(bcryptRes){
-          console.log('passes bycrypt: ', password);
           res.locals.user_id = id;
           next();
         } else {
-          console.log('hitting else');
           next({code: 1});
         }
       })
@@ -68,7 +65,6 @@ module.exports = {
 
   //middleware for /api/user/signup, it will create a new record in user Table if username is unique and redirect to homepage '/'
   signUp(req, res, next) {
-    console.log('incoming req.body', req.body);
     const queryEntry = 
       `INSERT INTO Users(username, password)
       VALUES($1, $2)
@@ -76,7 +72,6 @@ module.exports = {
       encrypt(req.body.password).then(hash => {
         db.query(queryEntry, [req.body.username, hash], (err, result) => {
           if(err) {
-            console.log('err: ', err.message);
             return next(err);
           }
           res.locals.user_id = result.rows[0].id;
@@ -90,7 +85,7 @@ module.exports = {
   genSession(req, res, next) {
     res.locals.token = generateToken(res.locals.user_id);
     res.locals.refreshToken = generateRefreshToken(res.locals.user_id);
-    next();
+    return next();
   },
 
 

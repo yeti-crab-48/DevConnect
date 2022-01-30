@@ -3,7 +3,6 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-
 //Routers
 const apiRouter = require('./routes/apiRouter.js');
 //ERROR CODES
@@ -21,18 +20,18 @@ app.use('/api', apiRouter);
 
 //When the client makes a GET request to homepage, send back the index.html
 app.get('/', (req, res) => {
-  res.end('/');
+  return res.end('/');
 });
 
 //404 NOT FOUND, unknown path handler
 app.use((req, res) => {
-  res.end('not a valid path');
+  return res.end('not a valid path');
 });
 
 //Global Error Handler, refer to errorCodes.js in utils to give err meaning
 app.use((err, req, res, next) => {
   const errObj = errorCodes(err);
-  res.json(errObj);
+  return res.json(errObj);
 })
 
 //server will listen to specified PORT

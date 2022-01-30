@@ -25,7 +25,7 @@ router.post('/createpost', userController.auth, apiController.createPost, (req, 
   /* res.json(res.locals.post); <---- Sends back the created post as JSON (currently not used) */
 
   //sends JSON back for frontend to redirect
-  res.json({postSuccess: true});
+  return res.json({postSuccess: true});
 });
 
 module.exports = router;
