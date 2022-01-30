@@ -1,13 +1,14 @@
-//Contains all our endpoints when the url is /api/
+/*---------express imports----------*/
 const express = require('express');
 const router = express.Router();
 
-//Controllers
+
+/*---------controller imports--------*/
 const apiController = require('../controllers/apiController.js');
 const userController = require('../controllers/userController.js');
 
-
-//Routers
+/*------------Routing when path is /api ----------------------*/
+//router imports
 const userRouter = require('./userRouter.js');
 const listingsRouter = require('./listingsRouter.js');
 
@@ -16,11 +17,14 @@ router.use('/user', userRouter);
 
 //when the urlpath is /api/listings, go into the listingsRouter.js in routes folder
 router.use('/listings', listingsRouter); 
+/*--------------------------------------------*/
 
 
-//post request when client submits a 'post' form 
+/*--------post request when client submits a 'post' form | Path: /api/createPost --------*/
 router.post('/createpost', userController.auth, apiController.createPost, (req, res) => {
-  // res.json(res.locals.post);
+  /* res.json(res.locals.post); <---- Sends back the created post as JSON (currently not used) */
+
+  //sends JSON back for frontend to redirect
   res.json({postSuccess: true});
 });
 

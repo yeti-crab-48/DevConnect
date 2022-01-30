@@ -1,5 +1,7 @@
-//Connection to Postgres DB
+/*------ Connection to Postgres DB BoilerPlate ---------*/
 const {Pool} = require('pg');
+
+//requiring our hidden database connection string
 require('dotenv').config({path: '../.env'});
 
 const pool = new Pool({

@@ -1,10 +1,13 @@
 //Controller middleware for path: /api
 
-//requiring our db
+/*--------importing our db ---------------*/
 const db = require('../models/yetiCrabdb.js');
 
+/*---------importing npm package----------*/ 
 const jwt = require('jsonwebtoken');
 
+
+/*-----------Exports------------*/
 module.exports = {
   //will insert a new record into the db Post Table matching all the info from the submitted form
   createPost(req, res, next) {

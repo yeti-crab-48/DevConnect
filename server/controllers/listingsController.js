@@ -1,9 +1,13 @@
 //Controller middleware for path: /api/listings
 
-//requiring our db
+/*------ importing our database ---------------*/
 const db = require('../models/yetiCrabdb.js');
 
+
+
+/*-----------Exports-------------*/
 module.exports = {
+
   //will send the data of all current listings from db to frontend to populate the board when client logs in after component mounts
   populate(req, res, next) {
     const queryEntry = 
@@ -16,7 +20,9 @@ module.exports = {
       return next();
     });
   },
-  //will send data from db listings table of the specific clicked listing to frontend to pop out
+
+
+  //will send data from db listings table of a specific listing(when clicked) to frontend to pop out
   popUp(req, res, next) {
     const queryEntry = 
     `SELECT * FROM Post
@@ -30,6 +36,8 @@ module.exports = {
       return next();
     });
   },
+
+
   //will delete the record in db listings table
   delete(req, res, next) {
     const queryEntry =

@@ -1,10 +1,16 @@
-require('dotenv').config({path: '../.env'})
 //Controller middleware for path: /api/user
 
-//requiring our db
+/*--------importing our database-------------*/
 const db = require('../models/yetiCrabdb.js');
 
-//security and authentication
+
+/*---------importing our hidden JWT essentials----------------*/
+require('dotenv').config({path: '../.env'})
+
+
+/*--------security and authentication----------*/
+
+//importing npm packages
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -14,19 +20,26 @@ function encrypt(password) {
   const workFactor = 10;
   return bcrypt.hash(password, workFactor)
 }
+/*--------------------------------------------*/
 
 
-//JSON WEB TOKENS
+/*--------JSON WEB TOKENS---------*/
+
+//jwt token created when user logs in or signs up
 function generateToken(id) {
-  return jwt.sign({id: id}, process.env.JWT_SECRET, {expiresIn: '1h'});
+  return jwt.sign({id: id}, process.env.JWT_SECRET, {expiresIn: '2h'});
 }
+//refresh token currently not being used
 function generateRefreshToken(id) {
   return jwt.sign(id, process.env.JWT_REFRESH);
 }
 
 
+
+/*-----------Exports-------------*/
 module.exports = {
-  //middleware for /api/user/login, it will find the record in the db user Table and go to the next middle if it is found, if not then redirect to signup
+
+  //middleware for /api/user/login, it will find the record in the User Table and go to the next middleware if successful
   login(req, res, next) {
     console.log('incoming req.body', req.body);
     const {username, password} = req.body;
@@ -51,7 +64,9 @@ module.exports = {
       })
     });
   },
-  //middleware for /api/user/signup, it will create a new record in user Table if username is unique and redirect to homepage
+
+
+  //middleware for /api/user/signup, it will create a new record in user Table if username is unique and redirect to homepage '/'
   signUp(req, res, next) {
     console.log('incoming req.body', req.body);
     const queryEntry = 
@@ -69,6 +84,8 @@ module.exports = {
         });
       });
   },
+
+
   //middleware to generate a session when user signs up or logs in
   genSession(req, res, next) {
     res.locals.token = generateToken(res.locals.user_id);
@@ -76,6 +93,8 @@ module.exports = {
     next();
   },
 
+
+  //middleware to check the jwtToken sent through as cookie and authorize the user
   auth(req, res, next) {
     jwt.verify(req.cookies.jwtToken, process.env.JWT_SECRET, (err, decoded) => {
       if(decoded) {
