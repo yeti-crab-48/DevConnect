@@ -39,7 +39,7 @@ const Home = (props) => {
   },[])
 
   // click handler for focus view of PostCard 
-  handleClick = (postId) => {
+  const handleClick = (postId) => {
     if (postId !== undefined) {
       setPopupPostId(postId);
       setIsPopupVisible(true);
@@ -47,13 +47,14 @@ const Home = (props) => {
   }
 
 
+         
   if(props.isAuthenticated === true){
     return (
-      <div>
+      <HomeStyleWrapper isPopupVisible={isPopupVisible}>
         Hello this is home <br/>
         <Link to='/register'>Click here to register</Link><br/>
         <Link to='/form'>Click here to create a post</Link>
-        {/* { isPopupVisible ? <PostPopup /> : null} */}
+        { isPopupVisible ? <PostPopup postId = {popupPostId}/> : null}
         <PostCardWrapper>
           {props.isAuthenticated && props.postList.map((post, i) => { 
             return <PostCard 
@@ -65,22 +66,28 @@ const Home = (props) => {
             />
           })}
         </PostCardWrapper>
-      </div>
+      </HomeStyleWrapper>
     )
   } else {
     return null
   }
 }
 
-// const HomeStyleWrapper = styled.div`
-//   ${({isPopupVisible}) => {
-//     return `
-    
-    
-//     `
-//   }}
+const HomeStyleWrapper = styled.div`
+  ${({isPopupVisible}) => {
+    if (isPopupVisible === true) {
+      return `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%; 
+        background: rgba(0,0,0,.6);
+      `
+    }
+  }}
 
-// `;
+`;
 
 
 const PostCardWrapper = styled.div`
