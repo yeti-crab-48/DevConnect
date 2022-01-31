@@ -17,7 +17,7 @@ const Login = (props) => {
   const [isLogin, toggleLogin] = useState(true)
   
   const handleRegister = (e) => {
-    e.preventDefault();
+    e.preventDefault(); //prevents the page from reloading
 
     const loginInfo = {
       username: e.target.username.value,

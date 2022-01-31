@@ -46,7 +46,7 @@ const App = (props) => {
         <Route path='/' element={<Home/>}></Route>
         <Route path='/register' element={<Login/>}></Route>
         <Route path='/form' element={<PostForm/>}></Route>
-        {/* <Route path='*' ></Route> */}
+        {/*404 page: <Route path='*' ></Route> */}
       </Routes>
     </BrowserRouter>
   )
