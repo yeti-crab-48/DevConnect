@@ -37,7 +37,6 @@ const Home = (props) => {
       navigate('/register');
     }
     props.getPosts();
-    rerender(true);
   }, [props.isAuthenticated])
 
   // click handler for focus view of PostCard 
