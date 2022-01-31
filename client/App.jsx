@@ -3,29 +3,58 @@ import {
   BrowserRouter, 
   Link, 
   Routes, 
-  Route
+  Route,
+  useNavigate
 } from 'react-router-dom';
 import Home from './containers/Home';
 import Login from './containers/Login';
 import PostForm from './containers/PostForm';
+import { connect } from 'react-redux';
+import * as action from './actions/actions';
 
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.posts.isAuthenticated
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  auth: (bool) => dispatch(action.setAuthAction(bool))
+})
 
 
 const App = (props) => {
+  //persisted login
+  // const navigate = useNavigate()
+  fetch('/api/user/auth')
+    .then(res => res.json())
+    .then(persist => {
+      console.log(persist);
+      if(persist.success){
+         props.auth((persist.success));
+        // navigate('/')
+        // window.location.href = '/';
+      } else {
+        props.auth(false)
+      }
+      if(persist.error) {
+        console.log('render err', persist.error);
+      }
+    }).catch(err => console.log(err))
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path='/register' element={<Login/>}></Route>
         <Route path='/form' element={<PostForm/>}></Route>
+        {/* <Route path='*' ></Route> */}
       </Routes>
-      {/* <h1 style={{color: 'blue', textAlign: 'center'}}>Let's Go Team Yeti Crab!!</h1>
-      <img style={{display:'block', margin: '0 auto'}} src='https://orig00.deviantart.net/9676/f/2009/247/6/1/yeti_crab_by_chaoskomori.jpg'/> */}
     </BrowserRouter>
   )
 }
 
-export default App; 
+// export default App; 
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
 
 /**
  * User Story: When I load Home, I want to see the posts in my feed

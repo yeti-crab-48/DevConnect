@@ -24,29 +24,34 @@ const mapDispatchToProps = (dispatch) =>({
 
 const Home = (props) => {
   const navigate =  useNavigate();
+  
   useEffect(() => {
-    props.getPosts();
-    if(!props.isAuthenticated){
+    console.log(props.isAuthenticated);
+    if(props.isAuthenticated === false){
       navigate('/register');
     }
+    props.getPosts();
   }, [])
 
-  return (
-    <div>
-      Hello this is home <br/>
-      <Link to='/register'>Click here to register</Link><br/>
-      <Link to='/form'>Click here to create a post</Link>
-      <PostCardWrapper>
-        {props.postList.map((post, i) => { return <PostCard title={post.title} createdAt={post.createdAt} key={i}/>})}
-      </PostCardWrapper>
-    </div>
-  )
+  if(props.isAuthenticated){
+    return (
+        <div>
+        Hello this is home <br/>
+        <Link to='/register'>Click here to register</Link><br/>
+        <Link to='/form'>Click here to create a post</Link>
+        <PostCardWrapper>
+          {props.isAuthenticated && props.postList.map((post, i) => { return <PostCard title={post.title} createdAt={post.createdAt} key={i}/>})}
+        </PostCardWrapper>
+      </div>
+    )
+  } else {
+    return null
+  }
 }
 
 const PostCardWrapper = styled.div`
   display: flex;
   column-gap: 30px;
-
   margin: ;
 `;
 

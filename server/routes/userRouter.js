@@ -23,4 +23,9 @@ router.post('/signup', userController.signUp, userController.genSession, (req, r
   return res.json({success: true});
 });
 
+
+router.get('/auth', userController.auth, (req, res) => {
+  res.json({success: true});
+})
+
 module.exports = router;

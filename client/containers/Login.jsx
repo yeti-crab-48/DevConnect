@@ -7,7 +7,6 @@ import * as action from '../actions/actions';
 const mapStateToProps = (state) => ({
   verified: state.posts.isAuthenticated
 })
-  
 
 const mapDispatchToProps = (dispatch) => ({
   authenticate: (bool) => dispatch(action.setAuthAction(bool))
@@ -15,7 +14,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 const Login = (props) => {
   const navigate = useNavigate()
-        //this.state   //this.setState
   const [isLogin, toggleLogin] = useState(true)
   
   const handleRegister = (e) => {
@@ -37,9 +35,10 @@ const Login = (props) => {
     })
       .then(res => res.json())
       .then(verified => {
+        console.log(verified);
         if(verified.success) {
-          props.authenticate(true)
-          navigate('/')
+          props.authenticate(true);
+          navigate('/');
         }
       });
   }

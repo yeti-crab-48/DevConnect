@@ -96,6 +96,7 @@ module.exports = {
   //middleware to check the jwtToken sent through as cookie and authorize the user
   auth(req, res, next) {
     jwt.verify(req.cookies.jwtToken, process.env.JWT_SECRET, (err, decoded) => {
+      console.log('ping from server', decoded);
       if(decoded) {
         return next();
       } else {
