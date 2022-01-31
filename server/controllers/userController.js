@@ -41,6 +41,7 @@ module.exports = {
 
   //middleware for /api/user/login, it will find the record in the User Table and go to the next middleware if successful
   login(req, res, next) {
+    console.log('ping', req.body);
     const {username, password} = req.body;
     const queryEntry = `
       SELECT * FROM Users
@@ -48,15 +49,18 @@ module.exports = {
     `
     db.query(queryEntry, [username], (err, result) => {
       if(err) {
-        next(err);
+        return next(err);
+      }
+      if(result.rows.length === 0){
+        return next({code: 1});
       }
       const { password: hashedPassword, id } = result.rows[0];
       bcrypt.compare(password, hashedPassword, (err, bcryptRes) => {
         if(bcryptRes){
           res.locals.user_id = id;
-          next();
+          return next();
         } else {
-          next({code: 1});
+          return next({code: 1});
         }
       })
     });

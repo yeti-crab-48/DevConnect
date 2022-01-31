@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch) => ({
   authenticate: (bool) => dispatch(action.setAuthAction(bool))
 })
 
-const Login = () => {
+const Login = (props) => {
   const navigate = useNavigate()
         //this.state   //this.setState
   const [isLogin, toggleLogin] = useState(true)

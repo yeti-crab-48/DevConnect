@@ -23,11 +23,11 @@ const mapDispatchToProps = (dispatch) =>({
 
 
 const Home = (props) => {
-  const navigate =  useNavigate()
+  const navigate =  useNavigate();
   useEffect(() => {
     props.getPosts();
     if(!props.isAuthenticated){
-      navigate('/register')
+      navigate('/register');
     }
   }, [])
 
