@@ -17,7 +17,7 @@ const Login = (props) => {
   const [isLogin, toggleLogin] = useState(true)
   
   const handleRegister = (e) => {
-    e.preventDefault();
+    e.preventDefault(); //prevents the page from reloading
 
     const loginInfo = {
       username: e.target.username.value,
@@ -81,13 +81,13 @@ const StyleButton = styled.button`
 `
 
 const StyledForm = styled.form`
-display: flex;
-flex-direction: column;
-margin-top:100px;
-width: 25%;
-border: 1px solid black;
-border-radius: 5px;
-backgorund-color: grey;
+  display: flex;
+  flex-direction: column;
+  margin-top:100px;
+  width: 25%;
+  border: 1px solid black;
+  border-radius: 5px;
+  backgorund-color: grey;
 `
 
 // export default Login;
