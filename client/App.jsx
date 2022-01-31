@@ -52,19 +52,3 @@ const App = (props) => {
 
 // export default App; 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-
-/**
- * User Story: When I load Home, I want to see the posts in my feed
- * 
- * Create dummy json file with Posts data 
- * Add mapDispatchToProps to the Home component with the GET_POST action creator 
- * On Home component mount, call GET_POST action creator 
- * Define the action type in postReducer -> get request to json file, update state  
- * Define our GET_POST action creator in actions.js  
- * Add mapState to Props to the Home component 
- * Render mapStateToProps to Home page -> render the posts 
- * 
- * 
- * 
- */

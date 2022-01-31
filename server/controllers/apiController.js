@@ -17,7 +17,7 @@ module.exports = {
     RETURNING *`;
     const {id: user_id} = jwt.decode(req.cookies.jwtToken, process.env.JWT_SECRET);
     const {title, body, contact, skills} = req.body;
-    db.query(queryEntry, [0, title, body, new Date().toLocaleString(), contact, skills, user_id], (err, result) => {
+    db.query(queryEntry, [0, title, body, new Date().toDateString(), contact, skills, user_id], (err, result) => {
       if(err) {
         return next({code: 2});
       }

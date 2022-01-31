@@ -27,7 +27,7 @@ const PostPopup = ({ clickHandler, postId }) => {
         newState.title = popup.title;
         newState.skills = popup.skills;
         newState.body = popup.body;
-        newState.createdAt = new Date(popup.created_at).toString();
+        newState.createdAt = new Date(popup.created_at).toDateString();
         setPopupBody(newState);
       })
   }, [])
@@ -46,14 +46,15 @@ const PostPopup = ({ clickHandler, postId }) => {
 
   return (
     <PopupWrapper>
-      <div>Contact Info</div>
-      <div>{popupBody.contactInfo}</div>
-      <div>Title</div>
-      <div>{popupBody.title}</div>
-      <div>Description: </div><span>{popupBody.description}</span>
-      <div>Skils: </div><span>{popupBody.skills}</span>
-      <div>Date: </div><span>{popupBody.createdAt}</span> 
-      </PopupWrapper>
+      <TitleWrapper>{popupBody.title}</TitleWrapper>
+      <HeaderWrapper>Date Posted: </HeaderWrapper>
+      <div>{popupBody.createdAt}</div> 
+      <HeaderWrapper>Gig Description: </HeaderWrapper>
+      <div>{popupBody.body}</div>
+      <HeaderWrapper>You should know and love the following technologies: </HeaderWrapper>
+      <div>{popupBody.skills}</div>
+      <HeaderWrapper>If interested, please call: </HeaderWrapper><span>{popupBody.contactInfo}</span>
+    </PopupWrapper>
   );
 };
 
@@ -66,8 +67,26 @@ const PopupWrapper = styled.div`
   position: fixed;
   left: 50%;
   top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 6;
   background-color: white; 
+  border-radius: 4px;
+  width: 800px;
+  max-width: 800px;
+  height: 600px;
+  max-height: 600px;
+  overflow: auto;
+  overflow-wrap: break-word;
+  padding: 15px;
+`;
+
+const HeaderWrapper = styled.div`
+  font-weight: bold;
+`;
+
+const TitleWrapper = styled.div`
+  font-size: 20pt;
+  font-weight: bold;
 `;
 
 export default PostPopup;
