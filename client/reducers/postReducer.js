@@ -23,6 +23,14 @@ const postReducer = (state = initialState, action) => {
 
       }
     }
+
+    case types.SET_AUTH:{
+      return {
+        ...state,
+        isAuthenticated: action.payload
+      }
+    }
+
     default: {
       return state;
     }

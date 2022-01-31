@@ -1,6 +1,17 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import * as action from '../actions/actions';
+
+const mapStateToProps = (state) => ({
+  verified: state.posts.isAuthenticated
+})
+  
+
+const mapDispatchToProps = (dispatch) => ({
+  authenticate: (bool) => dispatch(action.setAuthAction(bool))
+})
 
 const Login = () => {
   const navigate = useNavigate()
@@ -25,7 +36,12 @@ const Login = () => {
       body: JSON.stringify(loginInfo)
     })
       .then(res => res.json())
-      .then(verified => verified.success ? navigate('/') : null);
+      .then(verified => {
+        if(verified.success) {
+          props.authenticate(true)
+          navigate('/')
+        }
+      });
   }
 
   
@@ -75,4 +91,6 @@ border-radius: 5px;
 backgorund-color: grey;
 `
 
-export default Login;
+// export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+

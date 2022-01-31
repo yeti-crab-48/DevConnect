@@ -3,12 +3,12 @@ import { fetchPosts } from "../reducers/postReducer";
 import { connect } from "react-redux";
 import PostCard from "../components/PostCard";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 
 const mapStateToProps = (state) =>({
-  postList: state.posts.postList
+  postList: state.posts.postList,
+  isAuthenticated: state.posts.isAuthenticated
 });
 
 const mapDispatchToProps = (dispatch) =>({
@@ -23,8 +23,12 @@ const mapDispatchToProps = (dispatch) =>({
 
 
 const Home = (props) => {
+  const navigate =  useNavigate()
   useEffect(() => {
     props.getPosts();
+    if(!props.isAuthenticated){
+      navigate('/register')
+    }
   }, [])
 
   return (
