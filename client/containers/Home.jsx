@@ -3,13 +3,15 @@ import { fetchPosts } from "../reducers/postReducer";
 import { connect } from "react-redux";
 import PostCard from "../components/PostCard";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import PostPopup from "../components/PostPopup";
 
 
 const mapStateToProps = (state) =>({
-  postList: state.posts.postList
+  postList: state.posts.postList,
+  isAuthenticated: state.posts.isAuthenticated
 });
+
 
 const mapDispatchToProps = (dispatch) =>({
 
@@ -23,25 +25,68 @@ const mapDispatchToProps = (dispatch) =>({
 
 
 const Home = (props) => {
-  useEffect(() => {
-    props.getPosts();
-  }, [])
+  const navigate =  useNavigate();
+  const [isPopupVisible, setIsPopupVisible] = useState(false); // change to false later
+  const [popupPostId, setPopupPostId] = useState('');
 
-  return (
-    <div>
-      Hello this is home 
-      <Link to='/register'>Click here to register</Link>
-      <PostCardWrapper>
-        {props.postList.map((post, i) => { return <PostCard title={post.title} createdAt={post.createdAt} key={i}/>})}
-      </PostCardWrapper>
-    </div>
-  )
+  
+
+  useEffect(() => {
+    if(props.isAuthenticated === false){
+      navigate('/register');
+    }
+    props.getPosts();
+  },[])
+
+  // click handler for focus view of PostCard 
+  handleClick = (postId) => {
+    if (postId !== undefined) {
+      setPopupPostId(postId);
+      setIsPopupVisible(true);
+    } 
+  }
+
+
+  if(props.isAuthenticated === true){
+    return (
+      <div>
+        Hello this is home <br/>
+        <Link to='/register'>Click here to register</Link><br/>
+        <Link to='/form'>Click here to create a post</Link>
+        {/* { isPopupVisible ? <PostPopup /> : null} */}
+        <PostCardWrapper>
+          {props.isAuthenticated && props.postList.map((post, i) => { 
+            return <PostCard 
+              clickHandler={handleClick}
+              title={post.title} 
+              createdAt={post.createdAt} 
+              key={i}
+              id={post.id}
+            />
+          })}
+        </PostCardWrapper>
+      </div>
+    )
+  } else {
+    return null
+  }
 }
+
+// const HomeStyleWrapper = styled.div`
+//   ${({isPopupVisible}) => {
+//     return `
+    
+    
+//     `
+//   }}
+
+// `;
+
 
 const PostCardWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   column-gap: 30px;
-
   margin: ;
 `;
 

@@ -1,9 +1,8 @@
 import * as types from '../constants/actionTypes';
 
-
 const initialState = {
 
-  isAuthenticated: false, 
+  isAuthenticated: null, 
   postList: [],
 };
 
@@ -23,6 +22,15 @@ const postReducer = (state = initialState, action) => {
 
       }
     }
+
+    case types.SET_AUTH:
+      console.log('ping from reducer', action.payload);
+      return {
+        ...state,
+        isAuthenticated: action.payload
+      }
+    
+
     default: {
       return state;
     }
@@ -95,20 +103,6 @@ export const fetchPosts = () => {
       )
   }
 }
-  
-      // .then(posts => {
-      //   dispatch({type: types.GET_POSTS, payload: posts})
-  //     // });
-  //   fetch('./api/listings', {
-  //     method: 'GET',
-  //     headers: {'Content-Type': 'application/json'},
-  //   })
-  //     .then((data) => data.json())
-  //     .then((posts) =>  // assume its an array of objects 
-  //       dispatch({type: types.GET_POSTS, payload: posts})  
-  //     )
-  // }
-// }
 
 
 

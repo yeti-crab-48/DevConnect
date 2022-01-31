@@ -1,10 +1,13 @@
 //Controller middleware for path: /api
 
-//requiring our db
+/*--------importing our db ---------------*/
 const db = require('../models/yetiCrabdb.js');
 
+/*---------importing npm package----------*/ 
 const jwt = require('jsonwebtoken');
 
+
+/*-----------Exports------------*/
 module.exports = {
   //will insert a new record into the db Post Table matching all the info from the submitted form
   createPost(req, res, next) {
@@ -13,8 +16,8 @@ module.exports = {
     VALUES ($1, $2, $3, $4, $5, $6, $7)
     RETURNING *`;
     const {id: user_id} = jwt.decode(req.cookies.jwtToken, process.env.JWT_SECRET);
-    const {title, body, created_at, contact, skills} = req.body;
-    db.query(queryEntry, [0, title, body, created_at, contact, skills, user_id], (err, result) => {
+    const {title, body, contact, skills} = req.body;
+    db.query(queryEntry, [0, title, body, new Date().toLocaleString(), contact, skills, user_id], (err, result) => {
       if(err) {
         return next({code: 2});
       }
