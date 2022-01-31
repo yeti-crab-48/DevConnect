@@ -1,10 +1,16 @@
-require('dotenv').config({path: '../.env'})
 //Controller middleware for path: /api/user
 
-//requiring our db
+/*--------importing our database-------------*/
 const db = require('../models/yetiCrabdb.js');
 
-//security and authentication
+
+/*---------importing our hidden JWT essentials----------------*/
+require('dotenv').config({path: '../.env'})
+
+
+/*--------security and authentication----------*/
+
+//importing npm packages
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -14,20 +20,28 @@ function encrypt(password) {
   const workFactor = 10;
   return bcrypt.hash(password, workFactor)
 }
+/*--------------------------------------------*/
 
 
-//JSON WEB TOKENS
+/*--------JSON WEB TOKENS---------*/
+
+//jwt token created when user logs in or signs up
 function generateToken(id) {
-  return jwt.sign({id: id}, process.env.JWT_SECRET, {expiresIn: '1h'});
+  return jwt.sign({id: id}, process.env.JWT_SECRET, {expiresIn: '2h'});
 }
-function generateRefreshToken(id) {
-  return jwt.sign(id, process.env.JWT_REFRESH);
-}
+/*-----refresh token currently not being used--------*/
+// function generateRefreshToken(id) {
+//   return jwt.sign(id, process.env.JWT_REFRESH);
+// }
 
 
+
+/*-----------Exports-------------*/
 module.exports = {
-  //middleware for /api/user/login, it will find the record in the db user Table and go to the next middle if it is found, if not then redirect to signup
+
+  //middleware for /api/user/login, it will find the record in the User Table and go to the next middleware if successful
   login(req, res, next) {
+    console.log('ping', req.body);
     const {username, password} = req.body;
     const queryEntry = `
       SELECT * FROM Users
@@ -35,22 +49,25 @@ module.exports = {
     `
     db.query(queryEntry, [username], (err, result) => {
       if(err) {
-        next(err);
+        return next(err);
+      }
+      if(result.rows.length === 0){
+        return next({code: 1});
       }
       const { password: hashedPassword, id } = result.rows[0];
       bcrypt.compare(password, hashedPassword, (err, bcryptRes) => {
         if(bcryptRes){
-          console.log('passes bycrypt: ', password);
           res.locals.user_id = id;
-          next();
+          return next();
         } else {
-          console.log('hitting else');
-          next({code: 1});
+          return next({code: 1});
         }
       })
     });
   },
-  //middleware for /api/user/signup, it will create a new record in user Table if username is unique and redirect to homepage
+
+
+  //middleware for /api/user/signup, it will create a new record in user Table if username is unique and redirect to homepage '/'
   signUp(req, res, next) {
     const queryEntry = 
       `INSERT INTO Users(username, password)
@@ -59,7 +76,6 @@ module.exports = {
       encrypt(req.body.password).then(hash => {
         db.query(queryEntry, [req.body.username, hash], (err, result) => {
           if(err) {
-            console.log('err: ', err.message);
             return next(err);
           }
           res.locals.user_id = result.rows[0].id;
@@ -67,15 +83,20 @@ module.exports = {
         });
       });
   },
+
+
   //middleware to generate a session when user signs up or logs in
   genSession(req, res, next) {
     res.locals.token = generateToken(res.locals.user_id);
-    res.locals.refreshToken = generateRefreshToken(res.locals.user_id);
-    next();
+    // res.locals.refreshToken = generateRefreshToken(res.locals.user_id);
+    return next();
   },
 
+
+  //middleware to check the jwtToken sent through as cookie and authorize the user
   auth(req, res, next) {
     jwt.verify(req.cookies.jwtToken, process.env.JWT_SECRET, (err, decoded) => {
+      console.log('ping from server', decoded);
       if(decoded) {
         return next();
       } else {

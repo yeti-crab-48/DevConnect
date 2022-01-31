@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+
 
 module.exports = {
   mode: 'development',
@@ -8,6 +10,7 @@ module.exports = {
     path: path.resolve(__dirname, 'build'), 
     filename: 'bundle.js'
   },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -35,8 +38,12 @@ module.exports = {
       }
     ]
   }, 
-  plugins: [new HtmlWebpackPlugin({ template: path.resolve(__dirname, './client/index.html')})],
+  plugins: [
+    new HtmlWebpackPlugin({ template: path.resolve(__dirname, './client/index.html')}), 
+    new NodePolyfillPlugin()
+  ],
   devServer: {
+    historyApiFallback: true,
     static: {
         publicPath: '/build',
         directory: path.resolve(__dirname, 'build'),
@@ -46,4 +53,10 @@ module.exports = {
       '/api': 'http://localhost:3000'
     }    
   },
+  resolve: {
+    fallback: {
+      "path": require.resolve('path-browserify'),
+    }, 
+    extensions: ['', '.js', '.jsx'],
+  }
 }

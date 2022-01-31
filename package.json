@@ -7,12 +7,14 @@
     "server": "cd server && nodemon index.js",
     "start": "webpack serve --mode development --open",
     "dev": "concurrently \"npm run start\" \"npm run server\"",
-    "test": "npm run start && npm run server",
     "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/williamowen65/yeti-crab-scratch-project-1.git"
+  },
+  "resolutions": {
+    "styled-components": "^5"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +36,7 @@
     "css-loader": "^6.5.1",
     "html-webpack-plugin": "^5.5.0",
     "nodemon": "^2.0.15",
+    "path-browserify": "^1.0.1",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.67.0",
@@ -46,10 +49,15 @@
     "dotenv": "^14.3.2",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
+    "node-polyfill-webpack-plugin": "^1.1.4",
     "pg": "^8.7.1",
     "react": "^17.0.2",
+    "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "redux": "^4.1.2",
-    "sass": "^1.49.0"
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1",
+    "sass": "^1.49.0",
+    "styled-components": "^5.3.3"
   }
 }

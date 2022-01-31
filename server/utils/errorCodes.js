@@ -1,3 +1,5 @@
+/*------- ERROR HANDLING CODES --------*/
+
 module.exports = errorHandler = (err) => {
   const error = {}
   console.log(err);
