@@ -20,7 +20,7 @@ const PostCard = ({key, id, title, createdAt, clickHandler }) => {
 
 const StyledPostCard = styled.div`
   width: 200px;
-  height: 250px;
+  height: 200px;
   // overflow-y: scroll;
   border: 2px solid black;
   border-radius: 8px;

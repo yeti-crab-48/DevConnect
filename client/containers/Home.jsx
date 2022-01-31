@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PostCard from "../components/PostCard";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import VerticalNavbar from "../components/VerticalNavbar";
 import PostPopup from "../components/PostPopup";
 
 
@@ -40,21 +41,23 @@ const Home = (props) => {
 
   // click handler for focus view of PostCard 
   const handleClick = (postId) => {
+    console.log(postId, 'in handleClick')
     if (postId !== undefined) {
       setPopupPostId(postId);
       setIsPopupVisible(true);
-    } 
+    } else {
+      setIsPopupVisible(false);
+      setPopupPostId('');
+    }
   }
-
-
-         
+      
   if(props.isAuthenticated === true){
     return (
       <HomeStyleWrapper isPopupVisible={isPopupVisible}>
-        Hello this is home <br/>
-        <Link to='/register'>Click here to register</Link><br/>
-        <Link to='/form'>Click here to create a post</Link>
-        { isPopupVisible ? <PostPopup postId = {popupPostId}/> : null}
+        <VerticalNavbar/>
+        { isPopupVisible ? 
+          <PostPopup clickHandler={handleClick} postId = {popupPostId}/> :
+          null}
         <PostCardWrapper>
           {props.isAuthenticated && props.postList.map((post, i) => { 
             return <PostCard 
@@ -74,6 +77,8 @@ const Home = (props) => {
 }
 
 const HomeStyleWrapper = styled.div`
+  display: flex;
+  
   ${({isPopupVisible}) => {
     if (isPopupVisible === true) {
       return `
@@ -86,14 +91,13 @@ const HomeStyleWrapper = styled.div`
       `
     }
   }}
-
 `;
-
 
 const PostCardWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   column-gap: 30px;
+  row-gap: 30px;
   margin: ;
 `;
 

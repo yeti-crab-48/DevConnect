@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 
-const PostPopup = ({ postId }) => {
+const PostPopup = ({ clickHandler, postId }) => {
   
   // declare state element to hold the object returned from useEffect GET request 
   const [popupBody, setPopupBody] = useState({
@@ -29,20 +29,19 @@ const PostPopup = ({ postId }) => {
         newState.body = popup.body;
         newState.createdAt = new Date(popup.created_at).toString();
         setPopupBody(newState);
-        console.log(newState)
       })
   }, [])
 
-  /*
-  body: "gagaga"
-contact: "1234567890"
-created_at: "2022-01-29T08:00:00.000Z"
-id: "a8ccc85e-94ad-41bc-a61a-33142716b217"
-numapplicant: 0
-skills: "gagaga"
-title: "gagaga"
-user_id: "ce0993e6-8409-48ed-b234-1b0816f4b391"
-  */
+  const popupClickHandler = () => {
+    clickHandler()
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', popupClickHandler)
+    return () => {
+      document.removeEventListener('click', popupClickHandler)
+    }
+  })
 
 
   return (
