@@ -1,8 +1,8 @@
-import React from 'react';
+import React , { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import styled from 'styled-components';
 
+// PostForm component 
 function PostForm() {
   const navigate =useNavigate();
   const [postFailed, setPostFailed] = useState(false);
@@ -25,76 +25,131 @@ function PostForm() {
       .then(res => res.json())
       .then(success => success ? navigate('/'): setPostFailed(true))
   }
-  return(
-    <>
-      <Form onSubmit={handleSubmit}>
-        <Logo src=''></Logo>
-        <Fieldset>
-          <Legend>Listing Form</Legend>
-          <Label>Title:
-            <Input type="text" name="title" required/>
-          </Label>
-          <Label>Skills Required:
-            <Input type="text" name="skills" required/>
-          </Label>
-          <Label>Contact Info:
-            <Input type="text" name="contact" required/>
-          </Label>
-          <Label>Description:
-            <Textarea name="body" required></Textarea>
-          </Label>
-        <Button type="submit">Post</Button>
-        </Fieldset>
-      </Form>
-      {postFailed ? <p style={{color: 'red'}}>FAILED TO SUBMIT POST</p> : null}
-    </>
-  )
+
+  return (
+    <Page>
+      <FormContainer>
+        <img 
+          className='form-image'
+          src="https://i.pinimg.com/originals/87/b1/c1/87b1c12d2c131986c811c99c4c4b57a8.png"
+        />
+        <StyledForm onSubmit={handleSubmit}>
+          <h4>New Listing</h4>
+          <div>
+            <Header>Title</Header>
+            <Input type="text" name="title"></Input>
+          </div>
+          <div>
+            <Header>Skills Required</Header>
+            <Input type="text" name="skills"></Input>
+          </div>
+          <div>
+            <Header>Contact Info</Header>
+            <Input type="text" name="contact"></Input>
+          </div>
+          <div>
+            <Header>Description</Header>
+            <textarea className="body-text-area" name="body" required></textarea>
+          </div>
+          <button type="submit">POST</button>
+          <button 
+            style={{ backgroundColor: 'rgb(244,244,244)', color: 'grey'}}
+            onClick={()=>navigate('/')}
+          >
+            BACK TO HOMEPAGE
+          </button>
+        </StyledForm>
+        {postFailed ? <p style={{color: 'red'}}>Failed to submit new listing</p> : null}
+      </FormContainer>
+    </Page>
+  );
 }
 
-const Logo = styled.img`
-`
-
-const Legend = styled.legend`
-  margin: 0 auto;
-`
-
-const Fieldset = styled.fieldset`
-  width: 100%;
+// Styled components 
+const FormContainer = styled.div`
+  background-color: white;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-`
+  justify-content: space-between;
+  border: 1.5px solid grey;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px grey;
+  max-height: 800px;
+  max-width: 1000px;
 
-const Form = styled.form`
-  font-size: 1.5rem;
-  width: 50%;
-  margin: 0 auto;
-`
+  .form-image {
+    border-radius: inherit;
+    width: 40%;
+  }
+`;
 
-const Label = styled.label`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 20px;
-  width: 100%;
-`
-const Button = styled.button`
-  margin-top: 20px;
-  align-self: flex-end;
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
-`
-const Textarea = styled.textarea`
+const StyledForm = styled.form`
   width: 60%;
-  height: 15rem;
-  resize: none;
-  padding: 10px;
-`
+  align-self: stretch;
+  height: 100%;
+  padding: 2em 2em;
+  display: flex;
+  row-gap: 10px;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  h4 {
+    align-self: center;
+    margin: 0px;
+    color: rgb(100,100,100);
+  }
+
+  button {
+    cursor: pointer;
+    border-radius: 10px;
+    border 1px solid green;
+    background-color: rgb(113,180, 87);
+    color: white;
+    font-size: .75rem;
+    padding: 5px 2px;
+  }
+  
+  .body-text-area {
+    border: none;
+    font-size: 8pt;
+    height: 22em; 
+    resize: none; 
+    overflow-y: auto;
+    width: calc(100% - 1em);
+    border-bottom: 2px solid lightgrey;
+    &:focus {
+      outline: none;
+      border-bottom: 2px solid teal;
+    }
+  }
+`;
+
+const Header = styled.div`
+  font-size: .5rem;
+  text-transform: uppercase;
+  color: grey;
+`;
+
+const Page = styled.div`
+  // background-color: rgb(110,110,110);
+  background: linear-gradient(0.25turn, #7af0e0, #98ddeb ,#658bc9);
+  width: 100%;
+  height: 100%;
+  font-family: arial;
+  display: flex;
+  row-gap: 30%;
+  justify-content: space-around;
+  align-items: center;
+`;
 
 const Input = styled.input`
-  width: 40%;
-  padding: 5px;
-`
-
+  border: none;
+  font-size: 12pt;
+  width: calc(100% - 1em);
+  border-bottom: 2px solid lightgrey;
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid teal;
+  }
+`;
 
 export default PostForm;

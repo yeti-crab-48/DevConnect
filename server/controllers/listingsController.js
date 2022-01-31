@@ -13,7 +13,8 @@ module.exports = {
     const queryEntry = 
     `SELECT Post.*, Users.username
     FROM Post JOIN Users 
-    ON Post.user_id = Users.id `;
+    ON Post.user_id = Users.id
+    ORDER BY Post.created_at DESC`;
     db.query(queryEntry, (err, result) => {
       if(err) {
         return next({code: 2});

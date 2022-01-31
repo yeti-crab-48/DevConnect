@@ -2,20 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 
-
-/**
- * 
- * PostCard Component
- */
+// PostCard component 
 const PostCard = (props) => {
   const {key, username, numapplicant, id, title, created_at, clickHandler} = props;
   return (
     // add new relevant properties to props in the component 
     <StyledPostCard onClick={() => {clickHandler(id)}} key={key}>
         <StyledTitle> {title} </StyledTitle>
-        {<p>{new Date(created_at).toLocaleDateString(undefined)}</p>}
+        <p>{new Date(created_at).toLocaleDateString()}</p>
         {username}
-        {<p>applicants: {numapplicant}</p>}
+        <p>applicants: {numapplicant}</p>
     </StyledPostCard>
   )
 };

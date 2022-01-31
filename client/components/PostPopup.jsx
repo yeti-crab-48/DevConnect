@@ -21,7 +21,6 @@ const PostPopup = ({ clickHandler, postId }) => {
     })
       .then((data) => data.json())
       .then((popup) => {
-        console.log(popup);
         const newState = {}
         newState.contactInfo = popup.contact;
         newState.title = popup.title;
@@ -43,23 +42,22 @@ const PostPopup = ({ clickHandler, postId }) => {
     }
   })
 
-
   return (
-    <PopupWrapper>
-      <TitleWrapper>{popupBody.title}</TitleWrapper>
-      <HeaderWrapper>Date Posted: </HeaderWrapper>
+    <PopupContainer>
+      <Title>{popupBody.title}</Title>
+      <Header>Date Posted: </Header>
       <div>{popupBody.createdAt}</div> 
-      <HeaderWrapper>Gig Description: </HeaderWrapper>
+      <Header>Gig Description: </Header>
       <div>{popupBody.body}</div>
-      <HeaderWrapper>You should know and love the following technologies: </HeaderWrapper>
+      <Header>Requirements: </Header>
       <div>{popupBody.skills}</div>
-      <HeaderWrapper>If interested, please call: </HeaderWrapper><span>{popupBody.contactInfo}</span>
-    </PopupWrapper>
+      <Header>If interested, please call: </Header><span>{popupBody.contactInfo}</span>
+    </PopupContainer>
   );
 };
 
 
-const PopupWrapper = styled.div`
+const PopupContainer = styled.div`
   border: 1px solid black;
   display: flex; 
   flex-direction: column; 
@@ -69,22 +67,23 @@ const PopupWrapper = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 6;
-  background-color: white; 
+  background-color: rgba(199, 225, 244, 1); 
   border-radius: 4px;
-  width: 800px;
+  width: 70%;
   max-width: 800px;
-  height: 600px;
-  max-height: 600px;
+  height: 70%px;
+  max-height: 80%;
   overflow: auto;
   overflow-wrap: break-word;
   padding: 15px;
+  font-family: sans-serif;
 `;
 
-const HeaderWrapper = styled.div`
+const Header = styled.div`
   font-weight: bold;
 `;
 
-const TitleWrapper = styled.div`
+const Title = styled.div`
   font-size: 20pt;
   font-weight: bold;
 `;

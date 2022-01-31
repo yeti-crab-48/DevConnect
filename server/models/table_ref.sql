@@ -120,6 +120,9 @@ ALTER TABLE assets
     ALTER COLUMN description TYPE VARCHAR;
 */
 
+ALTER TABLE post
+  ALTER COLUMN created_at TYPE INT
+
 
 /*--------- Joining our user_id and usernmae ------*/
 SELECT Post.*, Users.username
