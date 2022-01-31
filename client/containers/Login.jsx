@@ -20,7 +20,6 @@ const Login = () => {
       },
       body: JSON.stringify(loginInfo)
     });
-\\
   }
 
   
