@@ -27,6 +27,9 @@ const App = (props) => {
       console.log(persist);
       if(persist.success){
          props.auth((persist.success));
+        navigate('/')
+        window.open('/');
+        // window.location.href = '/';
       } else {
         props.auth(false)
       }

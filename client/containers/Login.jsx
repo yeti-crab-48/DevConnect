@@ -36,7 +36,7 @@ const Login = (props) => {
       .then(res => res.json())
       .then(verified => {
         console.log(verified);
-        if(verified.success) {
+        if(verified.success === true) {
           props.authenticate(true);
           navigate('/');
         }
@@ -81,13 +81,13 @@ const StyleButton = styled.button`
 `
 
 const StyledForm = styled.form`
-display: flex;
-flex-direction: column;
-margin-top:100px;
-width: 25%;
-border: 1px solid black;
-border-radius: 5px;
-backgorund-color: grey;
+  display: flex;
+  flex-direction: column;
+  margin-top:100px;
+  width: 25%;
+  border: 1px solid black;
+  border-radius: 5px;
+  backgorund-color: grey;
 `
 
 // export default Login;

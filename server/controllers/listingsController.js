@@ -28,6 +28,7 @@ module.exports = {
     `SELECT * FROM Post
     WHERE id = $1`;
     db.query(queryEntry, [req.params.id], (err, result) => {
+      console.log('we are in popUp. this is the param id', req.params.id)
       if(err) {
         return next({code: 2});
       }
