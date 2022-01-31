@@ -31,7 +31,7 @@ const Home = (props) => {
       navigate('/register');
     }
     props.getPosts();
-  }, [])
+  }, [props.isAuthenticated])
 
   if(props.isAuthenticated){
     return (
