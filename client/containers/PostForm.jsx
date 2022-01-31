@@ -83,8 +83,6 @@ const Button = styled.button`
   align-self: flex-end;
   padding: 0.75rem 1.5rem;
   cursor: pointer;
-  // background-color: white;
-  // border: 1px solid black;
 `
 const Textarea = styled.textarea`
   width: 60%;

@@ -11,7 +11,7 @@ const userController = require('../controllers/userController.js');
 router.post('/login', userController.login, userController.genSession, (req, res) => {
   //our generated tokens being saved as a cookie
   res.cookie('jwtToken', res.locals.token, { httpOnly: true });
-  res.cookie('jwtRefreshToken', res.locals.refreshToken, { httpOnly: true });
+  // res.cookie('jwtRefreshToken', res.locals.refreshToken, { httpOnly: true });
   return res.json({success: true});
   
 });
@@ -19,7 +19,7 @@ router.post('/login', userController.login, userController.genSession, (req, res
 //post request made when client signs up for an account | path: /api/user/signup
 router.post('/signup', userController.signUp, userController.genSession, (req, res) => {
   res.cookie('jwtToken', res.locals.token, { httpOnly: true });
-  res.cookie('jwtRefreshToken', res.locals.refreshToken, { httpOnly: true });
+  // res.cookie('jwtRefreshToken', res.locals.refreshToken, { httpOnly: true });
   return res.json({success: true});
 });
 

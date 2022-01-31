@@ -1,10 +1,8 @@
 import React from 'react'
 import { 
-  BrowserRouter, 
-  Link, 
+  BrowserRouter,
   Routes, 
   Route,
-  useNavigate
 } from 'react-router-dom';
 import Home from './containers/Home';
 import Login from './containers/Login';
@@ -22,16 +20,13 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 const App = (props) => {
-  //persisted login
-  // const navigate = useNavigate()
+  /*----- authentication check ------*/
   fetch('/api/user/auth')
     .then(res => res.json())
     .then(persist => {
       console.log(persist);
       if(persist.success){
          props.auth((persist.success));
-        // navigate('/')
-        // window.location.href = '/';
       } else {
         props.auth(false)
       }
@@ -39,7 +34,7 @@ const App = (props) => {
         console.log('render err', persist.error);
       }
     }).catch(err => console.log(err))
-
+  /*-----------------------------------*/
   return (
     <BrowserRouter>
       <Routes>

@@ -29,10 +29,10 @@ function encrypt(password) {
 function generateToken(id) {
   return jwt.sign({id: id}, process.env.JWT_SECRET, {expiresIn: '2h'});
 }
-//refresh token currently not being used
-function generateRefreshToken(id) {
-  return jwt.sign(id, process.env.JWT_REFRESH);
-}
+/*-----refresh token currently not being used--------*/
+// function generateRefreshToken(id) {
+//   return jwt.sign(id, process.env.JWT_REFRESH);
+// }
 
 
 
@@ -88,7 +88,7 @@ module.exports = {
   //middleware to generate a session when user signs up or logs in
   genSession(req, res, next) {
     res.locals.token = generateToken(res.locals.user_id);
-    res.locals.refreshToken = generateRefreshToken(res.locals.user_id);
+    // res.locals.refreshToken = generateRefreshToken(res.locals.user_id);
     return next();
   },
 

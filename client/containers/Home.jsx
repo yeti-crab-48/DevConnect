@@ -24,13 +24,14 @@ const mapDispatchToProps = (dispatch) =>({
 
 const Home = (props) => {
   const navigate =  useNavigate();
+  const [,rerender] = useState(false);
   
   useEffect(() => {
-    console.log(props.isAuthenticated);
     if(props.isAuthenticated === false){
       navigate('/register');
     }
     props.getPosts();
+    rerender(true);
   }, [props.isAuthenticated])
 
   if(props.isAuthenticated){
