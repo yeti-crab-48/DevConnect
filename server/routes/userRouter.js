@@ -28,4 +28,9 @@ router.get('/auth', userController.auth, (req, res) => {
   res.json({success: true});
 })
 
+router.get('/logout', (req, res) => {
+  res.cookie('jwtToken', '', { maxAge: 0});
+  res.json({success: true});
+});
+
 module.exports = router;

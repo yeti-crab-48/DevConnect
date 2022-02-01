@@ -11,7 +11,10 @@ module.exports = {
   //will send the data of all current listings from db to frontend to populate the board when client logs in after component mounts
   populate(req, res, next) {
     const queryEntry = 
-    `SELECT * FROM Post`;
+    `SELECT Post.*, Users.username
+    FROM Post JOIN Users 
+    ON Post.user_id = Users.id
+    ORDER BY Post.created_at DESC`;
     db.query(queryEntry, (err, result) => {
       if(err) {
         return next({code: 2});

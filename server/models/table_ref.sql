@@ -119,3 +119,12 @@ ALTER TABLE assets
     ALTER COLUMN location TYPE VARCHAR,
     ALTER COLUMN description TYPE VARCHAR;
 */
+
+ALTER TABLE post
+  ALTER COLUMN created_at TYPE INT
+
+
+/*--------- Joining our user_id and usernmae ------*/
+SELECT Post.*, Users.username
+FROM Post JOIN Users 
+ON Post.user_id = Users.id 

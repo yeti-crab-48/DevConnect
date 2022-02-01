@@ -7,15 +7,13 @@ import { Link, useNavigate } from "react-router-dom";
 import VerticalNavbar from "../components/VerticalNavbar";
 import PostPopup from "../components/PostPopup";
 
-
+// State management 
 const mapStateToProps = (state) =>({
   postList: state.posts.postList,
   isAuthenticated: state.posts.isAuthenticated
 });
 
-
 const mapDispatchToProps = (dispatch) =>({
-
   // calls the thunk middleware function 
   getPosts: () => {
     const thunkFunc = fetchPosts();
@@ -23,14 +21,13 @@ const mapDispatchToProps = (dispatch) =>({
   },
   addPost: (postID) => {dispatch(actions.addPostActionCreator(postID))},
 });
+/// 
 
-
+// Home component 
 const Home = (props) => {
   const navigate =  useNavigate();
   const [isPopupVisible, setIsPopupVisible] = useState(false); // change to false later
   const [popupPostId, setPopupPostId] = useState('');
-
-  
 
   useEffect(() => {
     if(props.isAuthenticated === false){
@@ -38,6 +35,7 @@ const Home = (props) => {
     }
     props.getPosts();
   }, [props.isAuthenticated])
+
 
   // click handler for focus view of PostCard 
   const handleClick = (postId) => {
@@ -53,42 +51,46 @@ const Home = (props) => {
       
   if(props.isAuthenticated === true){
     return (
-      <HomeStyleWrapper isPopupVisible={isPopupVisible}>
-        <VerticalNavbar/>
-        { isPopupVisible ? 
-          <PostPopup clickHandler={handleClick} postId = {popupPostId}/> :
-          null}
-        <PostCardWrapper>
-          {props.isAuthenticated && props.postList.map((post, i) => { 
-            return <PostCard 
-              clickHandler={handleClick}
-              title={post.title} 
-              createdAt={post.createdAt} 
-              key={i}
-              id={post.id}
-            />
-          })}
-        </PostCardWrapper>
-      </HomeStyleWrapper>
+      <>
+        <HomeStyleWrapper isPopupVisible={isPopupVisible}>
+          <VerticalNavbar/>
+          { isPopupVisible ? 
+            <PostPopup clickHandler={handleClick} postId = {popupPostId}/> :
+            null}
+          <PostCardWrapper>
+            {props.isAuthenticated && props.postList.map((post, i) => { 
+              return <PostCard 
+                clickHandler={handleClick}
+                title={post.title} 
+                created_at={post.created_at}
+                username={post.username}
+                numapplicant={post.numapplicant}
+                key={post.id}
+                id={post.id}
+              />
+            })}
+          </PostCardWrapper>
+        </HomeStyleWrapper>
+      </>
     )
   } else {
     return null
   }
 }
 
+// Styled components 
 const HomeStyleWrapper = styled.div`
   display: flex;
-  
+  min-height: calc(100% - 72px);
+  background: linear-gradient(0.25turn, #7af0e0, #98ddeb ,#658bc9);
   ${({isPopupVisible}) => {
     if (isPopupVisible === true) {
       return `
-        position: fixed;
-        top: 0;
+        top: 53px;
         left: 0;
         width: 100%;
-        height: 100%; 
-        background: rgba(0,0,0,.6);
-      `
+        background: linear-gradient(0.25turn, #6d8277, #3d595e ,#3d4e5e);
+      `;
     }
   }}
 `;
@@ -98,7 +100,9 @@ const PostCardWrapper = styled.div`
   flex-wrap: wrap;
   column-gap: 30px;
   row-gap: 30px;
-  margin: ;
+  text-align: center;
+  margin-left: 316px;
+  padding: 20px 0;
 `;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

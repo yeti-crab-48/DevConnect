@@ -21,13 +21,12 @@ const PostPopup = ({ clickHandler, postId }) => {
     })
       .then((data) => data.json())
       .then((popup) => {
-        console.log(popup);
         const newState = {}
         newState.contactInfo = popup.contact;
         newState.title = popup.title;
         newState.skills = popup.skills;
         newState.body = popup.body;
-        newState.createdAt = new Date(popup.created_at).toString();
+        newState.createdAt = new Date(popup.created_at).toDateString();
         setPopupBody(newState);
       })
   }, [])
@@ -43,22 +42,22 @@ const PostPopup = ({ clickHandler, postId }) => {
     }
   })
 
-
   return (
-    <PopupWrapper>
-      <div>Contact Info</div>
-      <div>{popupBody.contactInfo}</div>
-      <div>Title</div>
-      <div>{popupBody.title}</div>
-      <div>Description: </div><span>{popupBody.description}</span>
-      <div>Skils: </div><span>{popupBody.skills}</span>
-      <div>Date: </div><span>{popupBody.createdAt}</span> 
-      </PopupWrapper>
+    <PopupContainer>
+      <Title>{popupBody.title}</Title>
+      <Header>Date Posted: </Header>
+      <div>{popupBody.createdAt}</div> 
+      <Header>Gig Description: </Header>
+      <div>{popupBody.body}</div>
+      <Header>Requirements: </Header>
+      <div>{popupBody.skills}</div>
+      <Header>If interested, please call: </Header><span>{popupBody.contactInfo}</span>
+    </PopupContainer>
   );
 };
 
 
-const PopupWrapper = styled.div`
+const PopupContainer = styled.div`
   border: 1px solid black;
   display: flex; 
   flex-direction: column; 
@@ -66,8 +65,27 @@ const PopupWrapper = styled.div`
   position: fixed;
   left: 50%;
   top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 6;
-  background-color: white; 
+  background-color: rgba(199, 225, 244, 1); 
+  border-radius: 4px;
+  width: 70%;
+  max-width: 800px;
+  height: 70%px;
+  max-height: 80%;
+  overflow: auto;
+  overflow-wrap: break-word;
+  padding: 15px;
+  font-family: sans-serif;
+`;
+
+const Header = styled.div`
+  font-weight: bold;
+`;
+
+const Title = styled.div`
+  font-size: 20pt;
+  font-weight: bold;
 `;
 
 export default PostPopup;
